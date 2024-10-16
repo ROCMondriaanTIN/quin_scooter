@@ -24,6 +24,7 @@
     <title>Document</title>
 </head>
 <body>
+    <a href="index.php">Back to categories</a>
     <div class="container">
         <div class="row">
 

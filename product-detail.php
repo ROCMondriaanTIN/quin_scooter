@@ -15,6 +15,9 @@
 
     $productProperties = $query->fetchAll(PDO::FETCH_ASSOC);
 
+    //get categoryId from first product for breadcrumb
+    $categoryId = $products[0]['category_id'];
+
 ?>
 
 <!doctype html>
@@ -30,6 +33,7 @@
     <title>Document</title>
 </head>
 <body>
+<a href="index.php">Back to categories</a> > <a href="product.php?id= <?php echo $categoryId ?>">Back to products</a>
     <div class="container">
         <div class="row">
 
