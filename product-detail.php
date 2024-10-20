@@ -7,7 +7,7 @@
     $query->bindParam(":id", $id);
     $query->execute();
 
-    $products = $query->fetchAll(PDO::FETCH_ASSOC);
+    $product = $query->fetch(PDO::FETCH_ASSOC);
 
     $query = $db->prepare("SELECT * FROM product_property WHERE product_id= :id");
     $query->bindParam(":id", $id);
@@ -16,7 +16,13 @@
     $productProperties = $query->fetchAll(PDO::FETCH_ASSOC);
 
     //get categoryId from first product for breadcrumb
-    $categoryId = $products[0]['category_id'];
+    $categoryId = $product['category_id'];
+
+    $query = $db->prepare("SELECT * FROM category WHERE id= :id");
+    $query->bindParam(":id", $categoryId);
+    $query->execute();
+
+    $category = $query->fetch(PDO::FETCH_ASSOC);
 
 ?>
 
@@ -33,15 +39,9 @@
     <title>Document</title>
 </head>
 <body>
-<a href="index.php">Back to categories</a> > <a href="product.php?id= <?php echo $categoryId ?>">Back to products</a>
+<a href="index.php">Back to categories</a> > <a href="product.php?id=<?php echo $categoryId ?>">Back to <?php echo $category['name'] ?></a>
     <div class="container">
         <div class="row">
-
-            <?php
-
-                foreach($products as &$product) {
-
-            ?>
 
             <div class="col-md-12">
                 <div class="card">
@@ -84,9 +84,6 @@
                 </div>
             </div>
 
-            <?php
-                }
-            ?>
 
         </div>
     </div>
